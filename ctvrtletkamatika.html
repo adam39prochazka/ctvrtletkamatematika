@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Čtvrtletka</title><style>
+*{box-sizing:border-box;margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{font-family:system-ui,sans-serif;color:#fff;background:#0f1030}
+.bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(120deg,#1b1464,#6a11cb,#0f9b8e,#1b1464);background-size:300% 300%;animation:g 18s ease infinite}
+@keyframes g{50%{background-position:100% 50%}}
+.bl{position:fixed;border-radius:50%;filter:blur(60px);opacity:.35;z-index:-1;animation:f 14s ease-in-out infinite alternate}
+@keyframes f{to{transform:translate(40vw,30vh) scale(1.4)}}
+.s{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 16px 20px;text-align:center}.s.on{display:flex}
+.b{font-size:1.4rem;padding:14px 36px;border-radius:18px;border:2px solid #fff6;background:#ffffff1f;color:#fff;cursor:pointer;backdrop-filter:blur(8px);transition:.2s;min-width:230px}
+.b:hover{transform:scale(1.06);background:#ffffff40}.b.on{background:#fff;color:#222}
+#bk{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:12px;min-width:0;padding:6px 16px;z-index:5}
+.qt{font-size:2rem;max-width:700px;margin-bottom:8px}.bw{min-height:56px;margin:8px}
+.bub{background:#fff;color:#222;padding:10px 18px;border-radius:18px;font-size:1.15rem;display:inline-block;animation:pop .3s}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
+.cr{margin-top:6px;font-size:1.1rem}
+.box{position:relative;margin:30px auto 50px;padding:46px 24px 20px;min-width:220px;background:#fff;color:#222;border-radius:16px;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:.3s}
+.box input{width:96px;font-size:1.8rem;text-align:center;border:2px solid #ccc;border-radius:10px;padding:6px}
+.box .c{font-size:1.2rem;padding:10px 14px;border-radius:10px;border:2px solid #ccc;background:#f4f4f4;cursor:pointer}
+.fr{display:flex;flex-direction:column;align-items:center;gap:4px}.fr hr{width:100%;border:1px solid #222}
+.f{display:none;position:absolute}.h .f,.s2 .f{display:block}
+.e{top:10px;width:16px;height:20px;background:#111;border-radius:50%}.e::after{content:'';position:absolute;top:3px;left:3px;width:6px;height:6px;border-radius:50%;background:#fff}
+.e1{left:32%}.e2{right:32%}
+.m{left:50%;top:30px;width:14px;height:7px;border-bottom:3px solid #111;border-radius:0 0 14px 14px;transform:translateX(-50%)}
+.s2 .m{border-bottom:0;border-top:3px solid #111;border-radius:14px 14px 0 0}
+.a{top:55%;width:34px;height:8px;background:#222;border-radius:5px}.a1{left:-32px;transform-origin:right}.a2{right:-32px;transform-origin:left}
+.l{bottom:-34px;width:8px;height:34px;background:#222;border-radius:5px}.l1{left:28%}.l2{right:28%}
+.h{animation:hop .6s ease infinite;box-shadow:0 0 35px #5f5}
+@keyframes hop{50%{transform:translateY(-22px)}}
+.h .a1{animation:w1 .35s infinite alternate}.h .a2{animation:w2 .35s infinite alternate}
+@keyframes w1{from{transform:rotate(20deg)}to{transform:rotate(75deg)}}@keyframes w2{from{transform:rotate(-20deg)}to{transform:rotate(-75deg)}}
+.s2{transform:rotate(-4deg) scaleY(.94);filter:grayscale(.5);box-shadow:0 0 30px #58f}
+.s2 .a1{transform:rotate(-60deg)}.s2 .a2{transform:rotate(60deg)}.s2 .e{height:14px}
+canvas{width:min(92vw,calc(70vh*448/496));border-radius:10px;touch-action:none;background:#000}
+#hud{font-size:1.3rem}
+#ov{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;z-index:4;padding:16px;overflow:auto}
+
+#mf{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+#mf span{position:absolute;top:0;left:0;white-space:nowrap;color:#fff;font-family:'Cambria Math',Cambria,Georgia,'Times New Roman',serif;font-style:italic;will-change:transform;text-shadow:0 0 18px #fff6;animation:fall linear infinite}
+@keyframes fall{from{transform:translate3d(0,-15vh,0) rotate(var(--r0))}to{transform:translate3d(var(--dx),115vh,0) rotate(var(--r1))}}
+@media (prefers-reduced-motion:reduce){#mf{display:none}}
+
+.ff{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;vertical-align:middle;line-height:1.2;font-size:.9em}
+.ff>span:first-child{padding:0 .22em .1em;border-bottom:.08em solid currentColor}.ff>span:last-child{padding:.1em .22em 0}
+.ex{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.4em;vertical-align:middle}
+.pr{font-size:2.4em;line-height:.85;font-weight:200}.sp{align-self:flex-start;font-size:.6em}
+.sq{display:inline-flex;align-items:stretch;line-height:1.2;vertical-align:middle}.rt{width:.72em;flex:none;align-self:stretch;overflow:visible;margin-right:-1px}
+.rad{border-top:.07em solid currentColor;padding:.12em .25em 0 .05em;display:flex;align-items:center;margin-top:.1em}.pw{gap:.05em}
+.nt{font-size:.95rem;opacity:.75;margin-top:-4px}
+.cr{display:flex;justify-content:center;align-items:center;gap:.4em}
+.er{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5em;margin:8px}.er b{display:inline-flex;align-items:center}
+</style></head><body>
+<div class="bg"></div><i class="bl" style="width:40vw;height:40vw;left:-10vw;top:-10vw;background:#f0a"></i><i class="bl" style="width:35vw;height:35vw;right:-8vw;bottom:-8vw;background:#0cf;animation-delay:-6s"></i>
+<div id="mf"></div>
+<button class="b" id="bk" style="display:none">←</button>
+<div class="s on" id="s0"><button class="b" data-m="c">Klasické opakování</button><button class="b" data-m="p">Pac-Man</button></div>
+<div class="s" id="s1"><button class="b" data-d="0">lehká</button><button class="b" data-d="1">základní</button><button class="b" data-d="2">těžká</button></div>
+<div class="s" id="s2"></div>
+<div class="s" id="cl"><div id="prog"></div><div id="qa"></div></div>
+<div class="s" id="pm"><div id="hud"></div><canvas id="cv" width="448" height="496"></canvas></div>
+<div id="ov"><div id="ovq"></div></div>
+<script>
+/* padající matematika v pozadí */
+(function(){const T=['√','√x','√81','x²','a²','n³','2⁵','10⁻³','(a+b)²','a²+b²=c²','a²−b²','π','%','25 %','∛','√2','xⁿ','3⁴','(−5)²','−5²','∑','∞','x=?','@a|b','@1|2','@3|4','@2|3','@5|6','@7|10','7²=49','√144','p·z','y=kx','y=@k|x','≈','±','Δ','12²','0,3²','(a·b)ⁿ','aᵐ·aⁿ','√a·√b','f(x)'];
+const mf=document.getElementById('mf');
+for(let i=0;i<34;i++){const e=document.createElement('span'),d=18+Math.random()*22;
+ e.innerHTML=T[Math.floor(Math.random()*T.length)].replace(/@(\w+)\|(\w+)/g,'<span class="ff"><span>$1</span><span>$2</span></span>');
+ e.style.cssText=`left:${Math.random()*96}vw;font-size:${1.3+Math.random()*3.2}rem;opacity:${.10+Math.random()*.2};animation-duration:${d}s;animation-delay:-${Math.random()*d}s;--dx:${(Math.random()*16-8).toFixed(1)}vw;--r0:${(Math.random()*40-20)|0}deg;--r1:${(Math.random()*120-60)|0}deg;filter:blur(${Math.random()<.35?1.5:0}px)`;
+ mf.appendChild(e)}})();
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),K=a=>a[R(0,a.length-1)];
+const F=n=>String(Math.round(n*1e4)/1e4).replace('.',',').replace('-','−');
+const OK=["tak čtvrtletka je doma","jednička jak nic víš co","kámo jak???","ngl docela fire","neříkám nic, you're on fire tho","z někoho tu bude v budoucnu Einstein i guess","hele jako a nechceš taky někdy udělat chybu??","ještě 3 příklady a pomalu si můžeš začít dělat doktorát","nahhhhh banger","ty máš sharingan, ne?","baller jako jan koller","slayyyy","sheeeesh 👀","ty jedeeeeeš","nezastavuj a jeď jsi on a roll!","příště učíš ty"];
+const KO=["neeee","hele tak příště to bude lepší","Řím se taky nepostavil za den, jen pracuj dál","žádný učený z nebe nespadl - víš jak to je","nic si z toho nedělej, každej se občas sekne!","it is what it is","život je lajf","tentokrát to nevyšlo, ale příště už to pofičí!","nejsi kapela abys furt vyhrával/a","v chillu, příště to zandáš!","jak pravil velký básník Yzomandias \"my jdeme ze dna\", tak jedem!"];
+const PN=[["Počet koupených housek a celková cena","p"],["Počet kopáčů a doba potřebná k vykopání stejného výkopu","n"],["Rychlost auta a doba jízdy při stejné ujeté vzdálenosti","n"],["Počet ujetých kilometrů a množství spotřebovaného benzínu","p"],["Počet kohoutků a doba napouštění bazénu","n"],["Počet kopií a jejich cena","p"]];
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+/* zlomky pod sebou, odmocniny, závorky */
+const FR=(n,d)=>`<span class="ff"><span>${n}</span><span>${d}</span></span>`;
+const sq=h=>`<span class="sq"><svg class="rt" viewBox="0 0 10 20" preserveAspectRatio="none" aria-hidden="true"><path d="M.3 12.5L2.6 11L5.2 19L9.8 .9" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><span class="rad">${h}</span></span>`;
+const PA=h=>`<span class="ex"><span class="pr">(</span>${h}<span class="pr">)</span></span>`;
+const pw=(h,e)=>`<span class="ex pw">${PA(h)}<span class="sp">${e}</span></span>`;
+const EX=h=>`<span class="ex">${h}</span>`;
+const RD=([n,d])=>{const g=gcd(Math.abs(n),Math.abs(d))||1;return d<0?[-n/g,-d/g]:[n/g,d/g]};
+const OPS={'+':(a,b)=>RD([a[0]*b[1]+b[0]*a[1],a[1]*b[1]]),'−':(a,b)=>RD([a[0]*b[1]-b[0]*a[1],a[1]*b[1]]),'×':(a,b)=>RD([a[0]*b[0],a[1]*b[1]]),'÷':(a,b)=>RD([a[0]*b[1],a[1]*b[0]])};
+const ev=t=>{t=[...t];for(const grp of[['×','÷'],['+','−']])for(let i=1;i<t.length;){if(grp.includes(t[i]))t.splice(i-1,3,OPS[t[i]](t[i-1],t[i+1]));else i+=2}return t[0]};
+const rf=(ds,extra=0)=>{let d,n;do{d=K(ds);n=R(1,d-1+extra)}while(gcd(n,d)>1);return[n,d]};
+const rfd=(d,extra=0)=>{let n;do n=R(1,d-1+extra);while(gcd(n,d)>1);return[n,d]};
+const fh=t=>t.map(x=>typeof x=='string'?x:FR(x[0],x[1])).join(' ');
+const G0={
+zl(d){const L=[2,3,4,5,6,8,9,10,12,15],L2=[3,4,5,6,7,8,9,10,12,14,15,16,18,20],S=[2,3,4,5,6,8,9],lim=d>1?200:60;
+ for(let k=0;k<500;k++){let t,v,html;
+  if(d==0){const o=K(['+','−','×','÷']);
+   if(o=='+'){const D=K([5,7,8,9,10,11,12]);t=[rfd(D),'+',rfd(D)]}
+   else if(o=='−'){const q=K([2,3,4,5]),m=K([2,3]);t=[rfd(q*m),'−',rfd(q)]}
+   else t=[rf(S,2),o,rf(S,2)]}
+  else if(d==1){const y=R(1,4);t=y==1?[rf(L),'+',rf(L)]:y==2?[rf(L),'−',rf(L)]:y==3?[rf(L,2),'×',rf(L,2)]:[rf(L),'÷',rf(L),'−',rf(L)]}
+  else if(Math.random()<.3){const o1=K(['+','−']),o2=K(['×','÷']),a=rf(L2),b=rf(L2),c=rf(L2,2);v=OPS[o2](OPS[o1](a,b),c);html=PA(fh([a,o1,b]))+' '+fh([o2,c]);t=0}
+  else t=[rf(L2,1),K(['+','−','×','÷']),rf(L2,1),K(['+','−','×','÷']),rf(L2,1)];
+  if(t){v=ev(t);html=fh(t)}
+  if(v[0]>0&&v[1]>1&&v[1]<=lim&&v[0]<=lim*2&&(t?d==0||new Set(t.filter((x,i)=>i%2==0).map(x=>x[1])).size>1||t.length==3&&t[1]!='+'&&t[1]!='−':1))
+   return{q:EX(html+' ='),t:'frac',a:v}}
+ return{q:EX(FR(1,2)+' + '+FR(1,3)+' ='),t:'frac',a:[5,6]}},
+um(d){const r=Math.random();
+ if(r<.35){const[x,y]=K(PN);return{q:x+'.',t:'ch',ch:['přímá úměrnost','nepřímá úměrnost'],a:y=='p'?0:1}}
+ if(r<.7){const u=R(5,d>1?95:40),a=R(2,d>1?12:8);let c;do c=R(2,d>1?15:10);while(c==a);return{q:`${a} kg ${K(['brambor','jablek','mouky','rajčat'])} stojí ${a*u} Kč. Kolik budou stát ${c} kg?`,a:c*u}}
+ const w=K([2,3,4,6]),n=R(2,d>1?20:12),T=w*n,dv=[];for(let i=1;i<=24;i++)if(T%i==0&&i!=w)dv.push(i);const v=K(dv);
+ return{q:`Při práci ${w} dělníků trvá výkop ${T/w} dní. Kolik dní by trval při ${v} dělnících (všichni pracují stejně rychle)?`,a:T/v}},
+pr(d){const k=R(0,d?2:1),p=K(d?[5,10,15,20,25,30,40,45,60,75,80]:[10,20,25,50]);
+ if(k==0){const W=100*R(1,d>1?20:6);return{q:`Ve škole je ${W} žáků. ${p} % z nich jede na výlet. Kolik žáků jede na výlet?`,a:W*p/100}}
+ if(k==1){const W=20*R(2,d>1?40:15);return{q:`Jára získal ve videohře ${W*p/100} bodů, což je ${p} % všech možných bodů. Kolik bodů bylo možné získat celkem?`,a:W}}
+ const P=20*R(5,d>1?60:40),s=Math.random()<.5?1:-1;return{q:`Tričko stálo ${P} Kč. V akci bylo ${s>0?'zdraženo':'zlevněno'} o ${p} %. Kolik Kč stojí nyní?`,a:P*(1+s*p/100)}},
+mo(d){const n=R(2,d?12:9)+(d>1?R(0,8):0),k=R(0,d?4:3);
+ if(k==0)return{q:`${n}² =`,a:n*n};if(k==1)return{q:`(−${n})² =`,a:n*n};if(k==2)return{q:`−${n}² =`,a:-n*n};
+ if(k==3){const x=R(1,9);return{q:`0,${x}² =`,a:Math.round(x*x)/100}}
+ let a,b;do{a=R(1,5);b=R(a+1,8)}while(gcd(a,b)>1);return{q:EX(pw(FR(a,b),2)+' ='),t:'frac',a:[a*a,b*b]}},
+od(d){const n=R(2,d>1?20:12),k=d?R(0,3):0,x=R(1,9);
+ if(k==0)return{q:EX(sq(n*n)+' ='),a:n};if(k==1)return{q:EX(sq(F(x*x/100))+' ='),a:x/10};
+ if(k==2)return{q:EX(sq(FR(x*x,100),1)+' ='),a:x/10};return{q:EX(sq('−'+n*n)+' ='),t:'ch',ch:['nelze určit',String(n),'−'+n],a:0}},
+mx(d){const T=()=>{const n=R(2,d?10:7),t=R(0,d>1?2:1);return t==0?[`${n}²`,n*n]:t==1?[sq(n*n),n]:[`(−${n})²`,n*n]};
+ let[s,v]=T();for(let i=0,c=d?R(1,2):1;i<c;i++){const o=d?K(['+','−']):'+',[s2,v2]=T();s+=` ${o} ${s2}`;v+=o=='+'?v2:-v2}return{q:EX(s+' ='),a:v}}};
+const gen=(ts,d)=>({t:'num',...G0[K(ts)](d)});
+const P=s=>parseFloat(String(s).replace(/\s/g,'').replace(',','.').replace('−','-'));
+const chk=(q,v)=>q.t=='frac'?(Number.isInteger(P(v[0]))&&Number.isInteger(P(v[1]))&&P(v[1])>0&&P(v[0])*q.a[1]==q.a[0]*P(v[1])&&gcd(Math.abs(P(v[0])),P(v[1]))==1):Math.abs(P(v[0])-q.a)<1e-6;
+const ans=q=>q.t=='ch'?q.ch[q.a]:q.t=='frac'?FR(q.a[0],q.a[1]):F(q.a);
+function ask(el,q,done){
+ const inner=q.t=='ch'?q.ch.map((c,i)=>`<button class="c" data-i="${i}">${c}</button>`).join(''):q.t=='frac'?`<span class="fr"><input inputmode="numeric" autocomplete="off"><hr><input inputmode="numeric" autocomplete="off"></span>`:`<input inputmode="decimal" autocomplete="off">`;
+ el.innerHTML=`<div class="qt">${q.q}</div>${q.t=='frac'?'<div class="nt">výsledek zapiš zlomkem v základním tvaru</div>':''}<div class="bw"></div><div class="box">${inner}<i class="f e e1"></i><i class="f e e2"></i><i class="f m"></i><i class="f a a1"></i><i class="f a a2"></i><i class="f l l1"></i><i class="f l l2"></i></div><br><button class="b" id="ok">Odeslat</button>`;
+ const box=el.querySelector('.box'),ok=el.querySelector('#ok'),bw=el.querySelector('.bw'),ins=[...el.querySelectorAll('input')];let fin=0;
+ const fn=i=>{if(fin)return;fin=1;const g=q.t=='ch'?i==q.a:chk(q,ins.map(x=>x.value));
+  box.classList.add(g?'h':'s2');ins.forEach(x=>x.disabled=1);
+  bw.innerHTML=`<span class="bub">${K(g?OK:KO)}</span>`+(g?'':`<div class="cr">Správně: ${ans(q)}</div>`);
+  ok.style.display='';ok.textContent='Dál →';ok.onclick=()=>done(g);ok.focus()};
+ ok.onclick=()=>{if(ins.length&&ins.every(x=>x.value.trim()))fn()};
+ if(q.t=='ch'){ok.style.display='none';el.querySelectorAll('.c').forEach(b=>b.onclick=()=>fn(+b.dataset.i))}
+ ins.forEach(x=>x.onkeydown=e=>{if(e.key=='Enter')ok.click()});if(ins[0])ins[0].focus()}
+/* navigace */
+const S={t:['um'],d:0,gh:1};let nav=['s0'];
+function show(id,np){document.querySelectorAll('.s').forEach(e=>e.classList.toggle('on',e.id==id));if(!np&&nav[nav.length-1]!=id)nav.push(id);$('#bk').style.display=id=='s0'?'none':''}
+$('#bk').onclick=()=>{stopG();$('#ov').style.display='none';if(nav.length>1)nav.pop();show(nav[nav.length-1],1)};
+document.querySelectorAll('#s0 .b').forEach(b=>b.onclick=()=>{S.m=b.dataset.m;show('s1')});
+document.querySelectorAll('#s1 .b').forEach(b=>b.onclick=()=>{S.d=+b.dataset.d;build();show('s2')});
+const TP=[['zl','počítání se zlomky'],['um','přímá a nepřímá úměra + trojčlenka'],['pr','procenta'],['mo','mocniny'],['od','odmocniny'],['mx','mocniny + odmocniny']];
+function build(){const e=$('#s2');e.innerHTML='';
+ if(S.m=='c'){TP.forEach(([k,n])=>{const b=document.createElement('button');b.className='b';b.textContent=n;b.onclick=()=>{S.t=[k];classic()};e.append(b)})}
+ else{const sel=new Set(['zl']);S.gh=1;TP.forEach(([k,n])=>{const b=document.createElement('button');b.className='b'+(k=='zl'?' on':'');b.textContent=n;b.onclick=()=>{sel.has(k)?sel.delete(k):sel.add(k);b.classList.toggle('on')};e.append(b)});
+  const g=document.createElement('button');g.className='b on';g.textContent='duchové';g.onclick=()=>{S.gh=!S.gh;g.classList.toggle('on')};e.append(g);
+  const st=document.createElement('button');st.className='b';st.textContent='Start ▶';st.style.background='#fff';st.style.color='#222';st.onclick=()=>{if(sel.size){S.t=[...sel];pac()}};e.append(st)}}
+/* klasický mód */
+function classic(){let n=0,ok=0,wr=[];const qs=Array.from({length:10},()=>gen(S.t,S.d));show('cl');
+ (function nx(){if(n==10){const r=ok>=9?'Jednička!':ok>=7?'Skvělé!':ok>=5?'Jde to, pojď to dotáhnout!':'Zkus to ještě jednou, půjde to!';
+  $('#prog').textContent='';$('#qa').innerHTML=`<h1>${ok} / 10</h1><p style="font-size:1.4rem;margin:8px">${r}</p>`+(wr.length?'<p style="margin:10px">Chyby:</p>'+wr.map(q=>`<p class="er">${q.q} <b>${ans(q)}</b></p>`).join(''):'')+'<br><button class="b" id="ag">Znovu</button> <button class="b" id="mn">Menu</button>';
+  $('#ag').onclick=classic;$('#mn').onclick=()=>{nav=['s0'];show('s0',1)};return}
+  $('#prog').textContent=`${n+1} / 10`;ask($('#qa'),qs[n],g=>{g?ok++:wr.push(qs[n]);n++;nx()})})()}
+/* Pac-Man */
+const MAP=["0UUUUUUUUUUUU45UUUUUUUUUUUU1","L............rl............R","L.ebbf.ebbbf.rl.ebbbf.ebbf.R","LPr  l.r   l.rl.r   l.r  lPR","L.guuh.guuuh.gh.guuuh.guuh.R","L..........................R","L.ebbf.ef.ebbbbbbf.ef.ebbf.R","L.guuh.rl.guuyxuuh.rl.guuh.R","L......rl....rl....rl......R","2BBBBf.rzbbf rl ebbwl.eBBBB3","     L.rxuuh gh guuyl.R     ","     L.rl          rl.R     ","     L.rl mjs--tjn rl.R     ","UUUUUh.gh i      q gh.gUUUUU","      .   i      q   .      ","BBBBBf.ef i      q ef.eBBBBB","     L.rl okkkkkkp rl.R     ","     L.rl          rl.R     ","     L.rl ebbbbbbf rl.R     ","0UUUUh.gh guuyxuuh gh.gUUUU1","L............rl............R","L.ebbf.ebbbf.rl.ebbbf.ebbf.R","L.guyl.guuuh.gh.guuuh.rxuh.R","LP..rl.......  .......rl..PR","6bf.rl.ef.ebbbbbbf.ef.rl.eb8","7uh.gh.rl.guuyxuuh.rl.gh.gu9","L......rl....rl....rl......R","L.ebbbbwzbbf.rl.ebbwzbbbbf.R","L.guuuuuuuuh.gh.guuuuuuuuh.R","L............P.............R","2BBBBBBBBBBBBBBBBBBBBBBBBBB3"];
+const T=16,SC=[[25,-3],[2,-3],[27,31],[0,31]];/* otázka se klade jen u velkých kuliček */
+const wall=(c,r,door)=>{if(r<0||r>30)return 1;const ch=MAP[r][(c+28)%28];return ' .P'.includes(ch)?0:ch=='-'?!door:1};
+const isW=(c,r)=>r>=0&&r<31&&c>=0&&c<28&&!' .P-'.includes(MAP[r][c]);
+let G=null;const ctx=$('#cv').getContext('2d');
+const pp=a=>'hli'.includes(a.m||'x')?[a.fx,a.fy]:[a.tx+a.dx*a.p,a.ty+a.dy*a.p];
+function rst(){G.pac={tx:13,ty:23,dx:0,dy:0,p:0,wx:-1,wy:0,lx:-1,ly:0};G.inv=0;G.fr=0;G.t=0;G.ph=0;
+ G.gh=S.gh?[{n:0,col:'#f33',tx:13,ty:11,dx:-1,dy:0,p:0,m:'n',fr:0},...[[1,'#ffb8ff',13,2],[2,'#0ff',11,6],[3,'#ffb852',15,10]].map(([n,col,x,rel])=>({n,col,tx:x,ty:14,dx:0,dy:0,p:0,fx:x,fy:14,m:'h',rel,fr:0}))]:[]}
+function dots(){G.d=MAP.map(r=>[...r].map(ch=>ch=='.'?1:ch=='P'?2:0));G.left=G.d.flat().filter(x=>x).length;G.bigT=G.big=G.d.flat().filter(x=>x==2).length}
+function pac(){show('pm');G={on:1,score:0,lives:3,lvl:1,sp:1,cnt:0,paused:0,ne:0,last:0,x:ctx};dots();rst();requestAnimationFrame(loop)}
+function stopG(){if(G)G.on=0}
+function qOv(cb){G.paused=1;$('#ov').style.display='flex';ask($('#ovq'),gen(S.t,S.d),g=>{$('#ov').style.display='none';G.paused=0;cb(g)})}
+function endG(){G.on=0;$('#ov').style.display='flex';$('#ovq').innerHTML=`<h1>Konec hry</h1><p style="font-size:1.6rem;margin:12px">Skóre ${G.score}</p><button class="b" id="ag">Znovu</button> <button class="b" id="mn">Menu</button>`;$('#ag').onclick=()=>{$('#ov').style.display='none';pac()};$('#mn').onclick=()=>{$('#ov').style.display='none';nav=['s0'];show('s0',1)}}
+function nl(){G.lvl++;G.msg=2;G.sp*=1.06;dots();rst()}
+function die(){if(--G.lives<=0)return endG();rst();G.inv=2}
+function fright(){G.fr=7;G.ne=0;G.gh.forEach(g=>{if(g.m=='n'){g.fr=1;g.rev=1}})}
+function tgt(g){if(g.m=='e')return[13,11];if(G.ph==0)return SC[g.n];const a=G.pac;
+ if(g.n==0)return[a.tx,a.ty];if(g.n==1)return[a.tx+4*a.lx,a.ty+4*a.ly];
+ if(g.n==2){const b=G.gh[0];return[2*(a.tx+2*a.lx)-b.tx,2*(a.ty+2*a.ly)-b.ty]}
+ return(g.tx-a.tx)**2+(g.ty-a.ty)**2>64?[a.tx,a.ty]:SC[3]}
+function upd(dt){G.t+=dt;if(G.inv>0)G.inv-=dt;if(G.fr>0){G.fr-=dt;if(G.fr<=0)G.gh.forEach(g=>g.fr=0)}
+ const ph=(G.t%27<7)?0:1;if(ph!=G.ph){G.ph=ph;G.gh.forEach(g=>{if(g.m=='n')g.rev=1})}
+ const a=G.pac;
+ if((a.dx||a.dy)&&a.wx==-a.dx&&a.wy==-a.dy){a.tx=(a.tx+a.dx+28)%28;a.ty+=a.dy;a.p=1-a.p;a.dx=a.wx;a.dy=a.wy;a.lx=a.dx;a.ly=a.dy}
+ const dec=()=>{if((a.wx||a.wy)&&!wall(a.tx+a.wx,a.ty+a.wy)){a.dx=a.wx;a.dy=a.wy;a.lx=a.dx;a.ly=a.dy}if(wall(a.tx+a.dx,a.ty+a.dy))a.dx=a.dy=0};
+ if(!a.dx&&!a.dy)dec();
+ if(a.dx||a.dy){a.p+=7*G.sp*dt;while(a.p>=1){a.p-=1;a.tx=(a.tx+a.dx+28)%28;a.ty+=a.dy;dec();if(!a.dx&&!a.dy){a.p=0;break}}}
+ const[px,py]=pp(a),c=((Math.round(px)%28)+28)%28,r=Math.round(py),v=G.d[r]&&G.d[r][c];
+ if(v){G.d[r][c]=0;G.left--;if(v==2)G.big--;G.score+=v==2?5:1;G.cnt++;
+  if(!G.left&&v!=2){nl();return}
+  if(v==2)return qOv(g=>{if(g){G.score+=10;fright()}else die();if(G.on&&(!G.big||!G.left))nl()})}
+ for(const g of G.gh){
+  if(g.m=='h'){g.fy=14+Math.sin(G.t*6)*.3;if(G.t>g.rel)g.m='l';continue}
+  if(g.m=='l'){const s=5*dt;if(Math.abs(g.fx-13)>.05){g.fy=14;g.fx+=Math.sign(13-g.fx)*s}else{g.fx=13;g.fy-=s;if(g.fy<=11){Object.assign(g,{m:'n',tx:13,ty:11,dx:-1,dy:0,p:0,fr:0,rev:0})}}continue}
+  if(g.m=='i'){g.fy+=5*dt;if(g.fy>=14){g.fy=14;g.m='l'}continue}
+  const door=g.m=='e',spd=door?14:g.fr?3.5:6.2*G.sp;
+  const dc=()=>{if(door&&g.tx==13&&g.ty==11){g.m='i';g.fx=13;g.fy=11;return}
+   if(g.rev){g.rev=0;if(!wall(g.tx-g.dx,g.ty-g.dy,door)){g.dx=-g.dx;g.dy=-g.dy;return}}
+   const tg=tgt(g);let best=1e9,bd=null;
+   for(const[x,y]of[[0,-1],[-1,0],[0,1],[1,0]]){if(x==-g.dx&&y==-g.dy)continue;if(wall(g.tx+x,g.ty+y,door))continue;
+    if(!door&&y<0&&g.tx>=11&&g.tx<=16&&(g.ty==11||g.ty==23)&&!g.fr)continue;
+    const dd=g.fr?Math.random():(g.tx+x-tg[0])**2+(g.ty+y-tg[1])**2;if(dd<best){best=dd;bd=[x,y]}}
+   if(!bd)bd=[-g.dx,-g.dy];g.dx=bd[0];g.dy=bd[1]};
+  g.p+=spd*dt;while(g.p>=1){g.p-=1;g.tx=(g.tx+g.dx+28)%28;g.ty+=g.dy;dc();if(g.m=='i'){g.p=0;break}}
+  if(g.m=='n'||g.m=='e'){const[gx,gy]=pp(g);if(Math.hypot(gx-px,gy-py)<.6&&g.m=='n'){if(g.fr){g.m='e';g.fr=0;G.score+=20*2**G.ne++}else if(G.inv<=0){die();return}}}}}
+function draw(){const x=ctx;x.fillStyle='#000';x.fillRect(0,0,448,496);x.fillStyle='#2b4cff';
+ for(let r=0;r<31;r++)for(let c=0;c<28;c++){if(isW(c,r)){x.fillRect(c*T+3,r*T+3,10,10);if(isW(c+1,r))x.fillRect(c*T+3,r*T+3,16,10);if(isW(c,r+1))x.fillRect(c*T+3,r*T+3,10,16)}
+  else if(MAP[r][c]=='-'){x.fillStyle='#fbd';x.fillRect(c*T,r*T+6,T,3);x.fillStyle='#2b4cff'}
+  const v=G.d[r][c];if(v){x.fillStyle='#ffd';x.beginPath();x.arc(c*T+8,r*T+8,v==2?(((G.t*4)%2<1.5)?6:0):2,0,7);x.fill();x.fillStyle='#2b4cff'}}
+ const a=G.pac,[px,py]=pp(a);if(G.inv<=0||((G.t*10)|0)%2){const mo=.05+.25*Math.abs(Math.sin(G.t*14)),an=Math.atan2(a.ly,a.lx);x.fillStyle='#ff0';x.beginPath();x.moveTo((px+.5)*T,(py+.5)*T);x.arc((px+.5)*T,(py+.5)*T,7.5,an+mo*Math.PI,an+(2-mo)*Math.PI);x.fill()}
+ for(const g of G.gh){const[gx,gy]=pp(g),X=(gx+.5)*T,Y=(gy+.5)*T;
+  if(g.m!='e'&&g.m!='i'){x.fillStyle=g.fr?(G.fr<2&&((G.t*6)|0)%2?'#fff':'#22f'):g.col;x.beginPath();x.arc(X,Y-1,7.5,Math.PI,0);x.lineTo(X+7.5,Y+7);x.lineTo(X-7.5,Y+7);x.fill()}
+  for(const s of[-3,3]){x.fillStyle='#fff';x.beginPath();x.arc(X+s,Y-2,2.7,0,7);x.fill();x.fillStyle='#22f';x.beginPath();x.arc(X+s+g.dx*1.3,Y-2+g.dy*1.3,1.3,0,7);x.fill()}}
+ if(G.msg>0){G.msg-=1/60;x.fillStyle='#000a';x.fillRect(0,200,448,80);x.fillStyle='#ff0';x.font='bold 26px system-ui';x.textAlign='center';x.fillText('Level '+(G.lvl-1)+' splněn!',224,248)}
+ $('#hud').textContent=`Skóre ${G.score}  ·  ${'❤'.repeat(Math.max(G.lives,0))}  ·  velké ${G.bigT-G.big}/${G.bigT}  ·  level ${G.lvl}`}
+function loop(ts){if(!G||!G.on)return;const dt=Math.min(.05,(ts-G.last)/1000||0);G.last=ts;if(!G.paused)upd(dt);if(G.on){draw();requestAnimationFrame(loop)}}
+const setW=w=>{if(G&&G.on&&!G.paused){G.pac.wx=w[0];G.pac.wy=w[1]}};
+addEventListener('keydown',e=>{const m={ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0],ArrowUp:[0,-1],w:[0,-1],ArrowDown:[0,1],s:[0,1]}[e.key];if(m&&G&&G.on&&!G.paused){e.preventDefault();setW(m)}});
+let sx,sy;const cv=$('#cv');cv.ontouchstart=e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY};
+cv.ontouchend=e=>{const t=e.changedTouches[0],x=t.clientX-sx,y=t.clientY-sy;if(Math.max(Math.abs(x),Math.abs(y))>20)setW(Math.abs(x)>Math.abs(y)?[Math.sign(x),0]:[0,Math.sign(y)])};
+</script></body></html>
